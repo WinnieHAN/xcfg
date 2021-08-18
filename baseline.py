@@ -225,6 +225,7 @@ def lr_branching(ifile, btype=1):
             # (caption, span, label, tag) = json.loads(line)
             # caption = caption.strip().split()
             if len(caption) < 2:
+                print(caption)
                 continue
             nword = len(caption)
             if btype == 0:
@@ -267,7 +268,7 @@ def lr_branching(ifile, btype=1):
         f1_ids = ["CF1", "SF1"] + [x[0] for x in xx[:8]]
     f1s = ['{:.2f}'.format(float(f1s[x]) * 100) for x in f1_ids] 
     print("\t".join(f1_ids))
-    print(seed, " ".join(f1s))
+    print(seed, "\t".join(f1s))
 
     acc = []
     print("\nPER-LENGTH-F1 (length, acc)\n")
@@ -278,12 +279,12 @@ def lr_branching(ifile, btype=1):
             acc.append((str(k), '{:.2f}'.format(v[1] / v[0])))
     k = [x for x, _ in acc]
     v = [x for _, x in acc]
-    print(" ".join(k))
-    print(" ".join(v))
+    print("\t".join(k))
+    print("\t".join(v))
 
 def main_lr_branching_random_predicted(iroot):
     print("{} ENDS\n".format(iroot))
-    for btype, name in enumerate(["LEFT-BRANCHING", "RIGHT-BRANCHING" "RANDOM", "PREDICTERD"]):
+    for btype, name in enumerate(["LEFT-BRANCHING", "RIGHT-BRANCHING", "RANDOM", "PREDICTERD"]):
         # ifile = iroot + f"{lang.lower()}-train.json"
         ifile = iroot
         lr_branching(ifile, btype)
@@ -379,7 +380,7 @@ def main_label_by_length(ifile, max_span_len=20, labels_set=["NP", "VP", "PP", "
 
 
 if __name__ == '__main__':
-    ifile = './data/parse_val_54.34.jsonl'
+    ifile = './data/parse_59p4.jsonl'
     #sys.argv[1]
     main_lr_branching_random_predicted(ifile)
     # main_label_by_length(ifile)
